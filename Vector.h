@@ -2,8 +2,8 @@
 // Created by Kajetan Dymkiewicz on 11.10.2017.
 //
 
-#ifndef UNTITLED_LIST1_H
-#define UNTITLED_LIST1_H
+#ifndef UNTITLED_VECTOR_H
+#define UNTITLED_VECTOR_H
 #include <sstream>
 using namespace std;
 
@@ -23,7 +23,4 @@ string toString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int de
 void del(int *& tabOfValues, int *& tabOfOffset);
 bool isCommand(const string command,const char *mnemonic);
 
-
-
-
-#endif //UNTITLED_LIST1_H
+#endif //UNTITLED_VECTOR_H

@@ -1,6 +1,10 @@
+//
+// Created by Kajetan Dymkiewicz on 11.10.2017.
+//
+
 #include <iostream>
 #include <sstream>
-#include "List1.h"
+#include "Vector.h"
 using namespace std;
 
 void mvec(int *& tabOfValues, int *& tabOfOffset, int lenghtFromUser, int defaultValueFromUser, int &lenghtOfVector, int &defaultValue ){
@@ -29,7 +33,7 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
                 int *resizedOffsests = new int[capacityOfTabs * 2];
                 int *resizedValues = new int[capacityOfTabs * 2];
 
-                for (int i = 0; i < (int) capacityOfTabs; ++i) {
+                for (int i = 0; i < capacityOfTabs; ++i) {
                     resizedValues[i] = tabOfValues[i];
                     resizedOffsests[i] = tabOfOffset[i];
                 }
@@ -83,14 +87,14 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
 
             } else{
 
-            std::cout << "podana wartość to wartość domyślna w wektorze" << endl;
+                cout << "podana wartość to wartość domyślna w wektorze" << endl;
 
             }
         }
 
     } else{
 
-        std::cout << "offset o podanej wartości nie istnieje" << endl;
+        cout << "offset o podanej wartości nie istnieje" << endl;
     }
 }
 
@@ -125,7 +129,7 @@ void len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePl
 
         lenghtOfVector = newLenght;
 
-    } else std::cout << "Aktualna długość wektora jest taka sama jak podana" << std::endl;
+    } else cout << "Aktualna długość wektora jest taka sama jak podana" << std::endl;
 
 }
 
@@ -176,79 +180,3 @@ void del(int *& tabOfValues, int *& tabOfOffset){
     delete []tabOfValues;
     delete []tabOfOffset;
 }
-
-bool isCommand(const string command,const char *mnemonic) {
-    return command==mnemonic;
-}
-
-int main() {
-
-    int * tabOfValues;
-    int * tabOfOffset;
-    int capacityOfTabs = START_SIZE;
-    int defaultValue;
-    int indexOfFreePlace = 0;
-    int lenghtOfVector;
-
-    while(true)
-    {
-        string line;
-        string command;
-        int firstArgument;
-        int secondArgument;
-
-        getline(cin,line);
-        std::stringstream stream(line);
-        stream >> command;
-        if(line=="" || command[0]=='#'){
-            // ignore empty line and comment
-            continue;
-        }
-
-        // copy line on output with exclamation mark
-        //cout << "!" << line << endl;;
-
-        if(isCommand(command,"exit")) {
-            break;
-        }
-
-        // zero-argument command
-
-        if(isCommand(command,"print")){
-            cout << toString(tabOfValues,tabOfOffset,lenghtOfVector,defaultValue,indexOfFreePlace);
-            continue;
-        }
-
-        if(isCommand(command,"del")){
-            del(tabOfValues,tabOfOffset);
-            continue;
-        }
-
-        // read next argument, one int firstArgument
-        stream >> firstArgument;
-
-        if(isCommand(command,"len")){
-            len(tabOfValues,tabOfOffset,lenghtOfVector,indexOfFreePlace,capacityOfTabs,firstArgument);
-            continue;
-        }
-
-        // read second argument
-
-        stream >> secondArgument;
-
-        if(isCommand(command,"mvec")){
-            mvec(tabOfValues,tabOfOffset,firstArgument,secondArgument,lenghtOfVector,defaultValue);
-            continue;
-        }
-
-        if(isCommand(command,"def")){
-            def(tabOfValues,tabOfOffset,lenghtOfVector,indexOfFreePlace,capacityOfTabs,defaultValue,firstArgument,secondArgument);
-            continue;
-        }
-
-        cout << "błędne polecenie: " << command << endl;
-    }
-
-}
-
-
