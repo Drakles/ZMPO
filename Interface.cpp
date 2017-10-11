@@ -16,6 +16,7 @@ int main() {
     int defaultValue;
     int indexOfFreePlace = 0;
     int lenghtOfVector;
+    bool vectorIsCreated = false;
 
     bool endOfProgram = false;
 
@@ -96,6 +97,13 @@ int main() {
                 cout <<"Wystąpił błąd" << endl;
             }
             wrongArgument = false;
+        }
+
+        if(isCommand(command,"print2")){
+            cout << print2ToString(tabOfValues,tabOfOffset,lenghtOfVector,defaultValue,indexOfFreePlace) << endl;
+
+            wrongArgument = false;
+
         }
 
         if(wrongArgument){

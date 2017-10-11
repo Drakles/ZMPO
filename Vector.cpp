@@ -55,7 +55,7 @@ int def(int *& tabOfValues, int *& tabOfOffset,
                 int *resizedOffsests = new int[capacityOfTabs * PRODUCT_OF_CAPACITY];
                 int *resizedValues = new int[capacityOfTabs * PRODUCT_OF_CAPACITY];
 
-                for (int i = 0; i < capacityOfTabs; ++i) {
+                for (int i = 0; i < indexOfFreePlace; ++i) {
                     resizedValues[i] = tabOfValues[i];
                     resizedOffsests[i] = tabOfOffset[i];
                 }
@@ -67,6 +67,16 @@ int def(int *& tabOfValues, int *& tabOfOffset,
                 tabOfValues[indexOfFreePlace] = valueFromUser;
                 tabOfOffset[indexOfFreePlace] = offsetFromUser;
                 indexOfFreePlace++;
+
+
+//                cout << "indexOfFreePlace = " << indexOfFreePlace << endl;
+//                //cout << "indexOfNewTables = " << indexOfNewTables << endl;
+//
+//                for (int j = 0; j < indexOfFreePlace ; ++j) {
+//                    cout << "wartość offset = " <<tabOfOffset[j] << endl;
+//                    cout << "wartość valuetab = " << tabOfValues[j] << endl;
+//                }
+
 
                 return SUCCES_CODE;
 
@@ -100,6 +110,18 @@ int def(int *& tabOfValues, int *& tabOfOffset,
 
                 capacityOfTabs = indexOfNewTables;
 
+                indexOfFreePlace = indexOfNewTables;
+
+//                cout << "indexOfFreePlace = " << indexOfFreePlace << endl;
+//                cout << "indexOfNewTables = " << indexOfNewTables << endl;
+//
+//                for (int j = 0; j < indexOfFreePlace ; ++j) {
+//                cout << "wartość offset = " <<tabOfOffset[j] << endl;
+//                cout << "wartość valuetab = " << tabOfValues[j] << endl;
+//            }
+
+
+
                 return SUCCES_CODE;
 
             } else{
@@ -112,7 +134,7 @@ int def(int *& tabOfValues, int *& tabOfOffset,
     }
 }
 
-int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePlace, int &capacityOfTabs, int newLenght){
+int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexOfFreePlace, int &capacityOfTabs, int newLenght){
 
     if(newLenght < lenghtOfVector) {
 
@@ -121,7 +143,9 @@ int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePla
 
         int indexOfNewTables = 0;
 
-        for (int i = 0; i < capacityOfTabs; ++i) {
+       // cout << "Początkowy indexOfFreePlace " << indexOfFreePlace << endl;
+
+        for (int i = 0; i < indexOfFreePlace; ++i) {
 
             if (tabOfOffset[i] < newLenght) {
                 resizedOffsests[indexOfNewTables] = tabOfOffset[i];
@@ -137,7 +161,15 @@ int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePla
         tabOfValues = resizedValues;
 
         lenghtOfVector = newLenght;
-        capacityOfTabs = indexOfNewTables;
+        //capacityOfTabs = indexOfNewTables;
+        indexOfFreePlace = indexOfNewTables;
+
+//        cout << "indexOfFreePlace " << indexOfFreePlace << endl;
+//
+//        for (int j = 0; j < indexOfFreePlace ; ++j) {
+//            cout << "wartość offset = " <<tabOfOffset[j] << endl;
+//            cout << "wartość valuetab = " << tabOfValues[j] << endl;
+//        }
 
         return SUCCES_CODE;
 
@@ -190,6 +222,26 @@ string toString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int de
         vector.append(COMA);
     }
     return vector;
+}
+
+string print2ToString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int defaultValue, int indexOfFreePlace){
+
+    string resultString;
+    resultString.append("[");
+    for (int i = 0; i < lenghtOfVector; ++i) {
+        for (int j = 0; j < indexOfFreePlace ; ++j) {
+            if(i == tabOfOffset[j]){
+                resultString.append("<");
+                resultString.append(std::to_string(tabOfValues[j]));
+                resultString.append(">");
+                i++;
+            }
+        }
+        resultString.append(std::to_string(defaultValue));
+        resultString.append(COMA);
+    }
+    resultString.append("]");
+    return resultString;
 }
 
 void del(int *& tabOfValues, int *& tabOfOffset){

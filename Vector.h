@@ -24,10 +24,11 @@ const int DEFAULT_VALUE_DOES_NOT_EXIST = -4;
 void mvec(int *& tabOfValues, int *& tabOfOffset, int lenghtFromUser, int defaultValueFromUser, int &lenghtOfVector, int &defaultValue,int capacityOfTabs );
 void copyTables(int *& tabOfOffset,int *& tabOfValues, int *& resizedOffsets, int *& resizedValues);
 int def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexOfFreePlace, int &capacityOfTabs, int defaultValue,int offsetFromUser, int valueFromUser);
-int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePlace, int &capacityOfTabs, int newLenght);
+int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexOfFreePlace, int &capacityOfTabs, int newLenght);
 int getDefaultvalue(int defaultValue, int indexOfFreePlace);
 int getElementFromVector(int * tabOfValues, int * tabOfOffset, int defaultValue, int indexOfFreePlace, int indexOfElement );
 string toString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int defaultValue, int indexOfFreePlace );
+string print2ToString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int defaultValue, int indexOfFreePlace);
 void del(int *& tabOfValues, int *& tabOfOffset);
 bool isCommand(const string command,const char *mnemonic);
 
