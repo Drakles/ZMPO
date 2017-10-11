@@ -7,16 +7,27 @@
 #include "Vector.h"
 using namespace std;
 
-void mvec(int *& tabOfValues, int *& tabOfOffset, int lenghtFromUser, int defaultValueFromUser, int &lenghtOfVector, int &defaultValue ){
+void mvec(int *& tabOfValues, int *& tabOfOffset,
+          int lenghtFromUser, int defaultValueFromUser,
+          int &lenghtOfVector, int &defaultValue,
+          int capacityOfTabs ){
 
     lenghtOfVector = lenghtFromUser;
     defaultValue = defaultValueFromUser;
 
     tabOfValues = new int[START_SIZE];
     tabOfOffset = new int [START_SIZE];
+
+    for (int i = 0; i < capacityOfTabs ; ++i) {
+        tabOfOffset[i] = -1;
+        tabOfValues[i] = -1;
+    }
 }
 
-void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexOfFreePlace, int &capacityOfTabs, int defaultValue,int offsetFromUser, int valueFromUser){
+int def(int *& tabOfValues, int *& tabOfOffset,
+         int &lenghtOfVector, int &indexOfFreePlace,
+         int &capacityOfTabs, int defaultValue,
+         int offsetFromUser, int valueFromUser){
 
     if(offsetFromUser < lenghtOfVector && offsetFromUser >= 0){
 
@@ -28,10 +39,12 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
                 tabOfOffset[indexOfFreePlace] = offsetFromUser;
                 indexOfFreePlace++;
 
+                return SUCCES_CODE;
+
             } else {
 
-                int *resizedOffsests = new int[capacityOfTabs * 2];
-                int *resizedValues = new int[capacityOfTabs * 2];
+                int *resizedOffsests = new int[capacityOfTabs * PRODUCT_OF_CAPACITY];
+                int *resizedValues = new int[capacityOfTabs * PRODUCT_OF_CAPACITY];
 
                 for (int i = 0; i < capacityOfTabs; ++i) {
                     resizedValues[i] = tabOfValues[i];
@@ -49,6 +62,8 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
                 tabOfValues[indexOfFreePlace] = valueFromUser;
                 tabOfOffset[indexOfFreePlace] = offsetFromUser;
                 indexOfFreePlace++;
+
+                return SUCCES_CODE;
 
             }
         } else{
@@ -84,21 +99,19 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
 
                 capacityOfTabs = indexOfNewTables;
 
+                return SUCCES_CODE;
 
             } else{
-
-                cout << "podana wartość to wartość domyślna w wektorze" << endl;
-
+                return THE_SAME_VALUE_AS_DEFAULT;
             }
         }
 
     } else{
-
-        cout << "offset o podanej wartości nie istnieje" << endl;
+        return OFFSET_FROM_USER_DOES_NOT_EXIST;
     }
 }
 
-void len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePlace, int &capacityOfTabs, int newLenght){
+int len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePlace, int &capacityOfTabs, int newLenght){
 
     if(newLenght < lenghtOfVector) {
 
@@ -125,19 +138,24 @@ void len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePl
         lenghtOfVector = newLenght;
         capacityOfTabs = indexOfNewTables;
 
+        return SUCCES_CODE;
+
     } else if ( newLenght > lenghtOfVector){
 
         lenghtOfVector = newLenght;
+        return SUCCES_CODE;
 
-    } else cout << "Aktualna długość wektora jest taka sama jak podana" << std::endl;
+    } else{
+        return ACTUAL_LENGTH_IS_THE_SAME_VALUE_FROM_USER_CODE;
+    }
 
 }
 
-void getDefaultvalue(int defaultValue, int indexOfFreePlace){
+int getDefaultvalue(int defaultValue, int indexOfFreePlace){
     if (indexOfFreePlace == 0 ){
-        cout << "domyślna wartość to: " << defaultValue << endl;
+        return defaultValue;
     } else{
-        cout << "ERROR - nie ma domyślnej wartości" << endl;
+        return DEFAULT_VALUE_DOES_NOT_EXIST;
     }
 }
 
@@ -165,14 +183,11 @@ string toString(int * tabOfValues, int * tabOfOffset, int lenghtOfVector, int de
                 vector.append(std::to_string(tabOfValues[j]));
                 vector.append(COMA);
                 i++;
-
             }
-
         }
         vector.append(std::to_string(defaultValue));
         vector.append(COMA);
     }
-
     return vector;
 }
 
