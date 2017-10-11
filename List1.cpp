@@ -1,13 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include "List1.h"
 using namespace std;
-
-const int START_SIZE = 1;
-const string LEN = "len: ";
-const string VALUES = "values: ";
-const string COMA = ",";
-const int PRODUCT_OF_CAPACITY = 2;
-
 
 void mvec(int *& tabOfValues, int *& tabOfOffset, int lenghtFromUser, int defaultValueFromUser, int &lenghtOfVector, int &defaultValue ){
 
@@ -31,6 +25,7 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
                 indexOfFreePlace++;
 
             } else {
+
                 int *resizedOffsests = new int[capacityOfTabs * 2];
                 int *resizedValues = new int[capacityOfTabs * 2];
 
@@ -89,10 +84,12 @@ void def(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &indexO
             } else{
 
             std::cout << "podana wartość to wartość domyślna w wektorze" << endl;
+
             }
         }
 
     } else{
+
         std::cout << "offset o podanej wartości nie istnieje" << endl;
     }
 }
@@ -125,7 +122,9 @@ void len(int *& tabOfValues, int *& tabOfOffset,int &lenghtOfVector, int &freePl
         capacityOfTabs = indexOfNewTables;
 
     } else if ( newLenght > lenghtOfVector){
+
         lenghtOfVector = newLenght;
+
     } else std::cout << "Aktualna długość wektora jest taka sama jak podana" << std::endl;
 
 }
@@ -178,13 +177,11 @@ void del(int *& tabOfValues, int *& tabOfOffset){
     delete []tabOfOffset;
 }
 
-bool isCommand(const string command,const char *mnemonic)
-{
+bool isCommand(const string command,const char *mnemonic) {
     return command==mnemonic;
 }
 
 int main() {
-
 
     int * tabOfValues;
     int * tabOfOffset;
