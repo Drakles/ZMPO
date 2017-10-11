@@ -24,6 +24,15 @@ void mvec(int *& tabOfValues, int *& tabOfOffset,
     }
 }
 
+void copyTables(int *& tabOfOffset,int *& tabOfValues, int *& resizedOffsets, int *& resizedValues){
+
+    delete[] tabOfOffset;
+    delete[] tabOfValues;
+
+    tabOfOffset = resizedOffsets;
+    tabOfValues = resizedValues;
+}
+
 int def(int *& tabOfValues, int *& tabOfOffset,
          int &lenghtOfVector, int &indexOfFreePlace,
          int &capacityOfTabs, int defaultValue,
@@ -53,11 +62,7 @@ int def(int *& tabOfValues, int *& tabOfOffset,
 
                 capacityOfTabs *= PRODUCT_OF_CAPACITY;
 
-                delete[]tabOfOffset;
-                delete[]tabOfValues;
-
-                tabOfOffset = resizedOffsests;
-                tabOfValues = resizedValues;
+                copyTables(tabOfOffset,tabOfValues,resizedOffsests,resizedValues);
 
                 tabOfValues[indexOfFreePlace] = valueFromUser;
                 tabOfOffset[indexOfFreePlace] = offsetFromUser;
@@ -91,11 +96,7 @@ int def(int *& tabOfValues, int *& tabOfOffset,
                     }
                 }
 
-                delete []tabOfOffset;
-                delete []tabOfValues;
-
-                tabOfOffset = resizedOffsests;
-                tabOfValues = resizedValues;
+                copyTables(tabOfOffset,tabOfValues,resizedOffsests,resizedValues);
 
                 capacityOfTabs = indexOfNewTables;
 
